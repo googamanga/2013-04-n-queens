@@ -10,11 +10,7 @@ describe("Board", function() {
       var conflictDetected = board['hasAny' + capitalize(conflictType) + 'Conflicts']();
       var conflictExpected = _(expectedConflicts).contains(conflictType);
       expect(conflictDetected).toEqual(conflictExpected);
-      // console.log('expectedConflicts:    ' + expectedConflicts + '              conflictType: ' + conflictType);
-      // console.log('expects:  ' + conflictDetected === conflictExpected);
-      // console.log(matrix);
     });
-    console.log('------------------------------------------------');
   };
 
   it("should find non conflicts", function() {

@@ -58,8 +58,12 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
+      var acc = 0;
       for(var i = 0; i < this.attributes.n; i++){
         if(this.attributes[rowIndex][i] === 1){
+          acc++;
+        }
+        if(acc > 1){
           return true;
         }
       }
@@ -76,8 +80,12 @@
     },
 
     hasColConflictAt: function(colIndex){
+      var acc = 0;
       for(var i = 0; i < this.attributes.n; i++){
         if(this.attributes[i][colIndex] === 1){
+          acc++;
+        }
+        if(acc > 1){
           return true;
         }
       }
@@ -94,10 +102,14 @@
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
+      var acc = 0;
       var col = Math.max(majorDiagonalColumnIndexAtFirstRow,0);
       var row = Math.max(-majorDiagonalColumnIndexAtFirstRow,0);
       while(row<this.attributes.n){
         if(this.attributes[row][col] === 1){
+          acc++;
+        }
+        if(acc > 1){
           return true;
         }
         col++;
@@ -108,7 +120,7 @@
 
     hasAnyMajorDiagonalConflicts: function(){
       for (var i = -this.attributes.n+1; i < this.attributes.n; i++) {
-        if(hasMajorDiagonalConflictAt(i)){
+        if(this.hasMajorDiagonalConflictAt(i)){
           return true;
         }
       }
@@ -116,10 +128,14 @@
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
+      var acc = 0;
       var row = Math.max(minorDiagonalColumnIndexAtFirstRow - this.attributes.n +  1, 0);
       var col = Math.min(minorDiagonalColumnIndexAtFirstRow,this.attributes.n -1);
       while(row < this.attributes.n){
         if(this.attributes[row][col] === 1){
+          acc++;
+        }
+        if(acc > 1){
           return true;
         }
         row++;
@@ -129,7 +145,12 @@
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      return false; // fixme
+      for(var i = (this.attributes.n-1)*2; i > 0;i--){
+        if(this.hasMinorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
+      return false;
     }
 
   });
