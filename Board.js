@@ -97,13 +97,13 @@
       var col = Math.max(majorDiagonalColumnIndexAtFirstRow,0);
       var row = Math.max(-majorDiagonalColumnIndexAtFirstRow,0);
       while(row<this.attributes.n){
-        if(this.attributes[row][col] === 1){// chekc ++ thing
+        if(this.attributes[row][col] === 1){
           return true;
         }
         col++;
         row++;
       }
-      return false; 
+      return false;
     },
 
     hasAnyMajorDiagonalConflicts: function(){
@@ -112,11 +112,20 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var row = Math.max(minorDiagonalColumnIndexAtFirstRow - this.attributes.n +  1, 0);
+      var col = Math.min(minorDiagonalColumnIndexAtFirstRow,this.attributes.n -1);
+      while(row < this.attributes.n){
+        if(this.attributes[row][col] === 1){
+          return true;
+        }
+        row++;
+        col--;
+      }
+      return false;
     },
 
     hasAnyMinorDiagonalConflicts: function(){
