@@ -58,7 +58,7 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
-      for(var i = 0; i < this.attributes[rowIndex].length; i++){
+      for(var i = 0; i < this.attributes.n; i++){
         if(this.attributes[rowIndex][i] === 1){
           return true;
         }
@@ -67,8 +67,6 @@
     },
 
     hasAnyRowConflicts: function(){
-      debugger;
-
       for(var i = 0; i < this.attributes.n; i++){
         if(this.hasRowConflictAt(i)){
           return true;
@@ -78,18 +76,42 @@
     },
 
     hasColConflictAt: function(colIndex){
+      for(var i = 0; i < this.attributes.n; i++){
+        if(this.attributes[i][colIndex] === 1){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     hasAnyColConflicts: function(){
+      for(var i = 0; i < this.attributes.n; i++){
+        if(this.hasColConflictAt(i)){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var col = Math.max(majorDiagonalColumnIndexAtFirstRow,0);
+      var row = Math.max(-majorDiagonalColumnIndexAtFirstRow,0);
+      while(row<this.attributes.n){
+        if(this.attributes[row][col] === 1){// chekc ++ thing
+          return true;
+        }
+        col++;
+        row++;
+      }
+      return false; 
     },
 
     hasAnyMajorDiagonalConflicts: function(){
+      for (var i = -this.attributes.n+1; i < this.attributes.n; i++) {
+        if(hasMajorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
