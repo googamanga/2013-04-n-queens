@@ -55,14 +55,52 @@ window.countNRooksSolutions = function(n){
 };
 
 window.findNQueensSolution = function(n){
-  var solution = undefined; //fixme
+  var board = new Board({"n":n});
+  var currentRow = 0;
+  var returnedArray = [];
+  var solver = function(currentRow){
+    for (var col = 0; col < n; col++) {
+      board.attributes[currentRow][col] = 1;
+      if(!board.hasAnyQueensConflicts()){
+        if(currentRow === n - 1){
+          for(var i = 0; i < n; i++){
+            returnedArray.push(board.attributes[i]);
+          }
+          return returnedArray;
+        } else {
+          solver( currentRow + 1 );
+        }
+      }
+      board.attributes[currentRow][col] = 0;
+    }
+  };
+  var solution = solver(currentRow);
+  solution = solution || [];
 
   console.log('Single solution for ' + n + ' queens:', solution);
   return solution;
 };
 
 window.countNQueensSolutions = function(n){
-  var solutionCount = undefined; //fixme
+if( n === 0){return 1;}
+  var board = new Board({"n":n});
+  var solutionCount = 0;
+  var currentRow = 0;
+  var solver = function(currentRow){
+    for (var col = 0; col < n; col++) {
+      board.attributes[currentRow][col] = 1;
+      if(!board.hasAnyQueensConflicts()){
+        if(currentRow === n - 1){
+          solutionCount++;
+        }
+        else{
+          solver( currentRow + 1 );
+        }
+      }
+      board.attributes[currentRow][col] = 0;
+    }
+  };
+  solver(currentRow);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
