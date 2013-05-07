@@ -7,19 +7,19 @@ window.findNRooksSolution = function(n){
   var currentRow = 0;
   var returnedArray = [];
   var solver = function(currentRow){
-    if(currentRow === n){
-      for(var i = 0; i < n; i++){
-        returnedArray.push(board.attributes[i]);
-      }
-      return returnedArray;
-    }
     for (var col = 0; col < n; col++) {
-        board.attributes[currentRow][col] = 1;
-
-        if(!board.hasAnyRooksConflicts()){
+      board.attributes[currentRow][col] = 1;
+      if(!board.hasAnyRooksConflicts()){
+        if(currentRow === n - 1){
+          for(var i = 0; i < n; i++){
+            returnedArray.push(board.attributes[i]);
+          }
+          return returnedArray;
+        } else {
           solver( currentRow + 1 );
         }
-        board.attributes[currentRow][col] = 0;
+      }
+      board.attributes[currentRow][col] = 0;
     }
   };
   var solution = solver(currentRow);
@@ -30,7 +30,25 @@ window.findNRooksSolution = function(n){
 };
 
 window.countNRooksSolutions = function(n){
-  var solutionCount = undefined; //fixme
+  if( n === 0){return 1;}
+  var board = new Board({"n":n});
+  var solutionCount = 0;
+  var currentRow = 0;
+  var solver = function(currentRow){
+    for (var col = 0; col < n; col++) {
+      board.attributes[currentRow][col] = 1;
+      if(!board.hasAnyRooksConflicts()){
+        if(currentRow === n - 1){
+          solutionCount++;
+        }
+        else{
+          solver( currentRow + 1 );
+        }
+      }
+      board.attributes[currentRow][col] = 0;
+    }
+  };
+  solver(currentRow);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
