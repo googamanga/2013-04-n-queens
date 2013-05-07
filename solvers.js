@@ -3,7 +3,27 @@
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
 
 window.findNRooksSolution = function(n){
-  var solution = undefined; //fixme
+  var board = new Board({"n":n});
+  var currentRow = 0;
+  var returnedArray = [];
+  var solver = function(currentRow){
+    if(currentRow === n){
+      for(var i = 0; i < n; i++){
+        returnedArray.push(board.attributes[i]);
+      }
+      return returnedArray;
+    }
+    for (var col = 0; col < n; col++) {
+        board.attributes[currentRow][col] = 1;
+
+        if(!board.hasAnyRooksConflicts()){
+          solver( currentRow + 1 );
+        }
+        board.attributes[currentRow][col] = 0;
+    }
+  };
+  var solution = solver(currentRow);
+  solution = solution || [];
 
   console.log('Single solution for ' + n + ' rooks:', solution);
   return solution;

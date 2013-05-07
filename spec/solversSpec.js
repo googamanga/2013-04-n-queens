@@ -5,6 +5,7 @@ describe("solvers", function() {
 
     it('finds a valid solution for n of 0-8', function(){
       _.range(1, 8).map(function(n){
+        // debugger
         var solutionBoard = new Board(findNRooksSolution(n));
         expect(solutionBoard.hasAnyRooksConflicts()).toEqual(false);
       });
