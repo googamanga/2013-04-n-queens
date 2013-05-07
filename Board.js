@@ -119,7 +119,7 @@
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      for (var i = -this.attributes.n+1; i < this.attributes.n; i++) {
+      for(var i = -this.attributes.n+1; i < this.attributes.n; i++) {
         if(this.hasMajorDiagonalConflictAt(i)){
           return true;
         }
